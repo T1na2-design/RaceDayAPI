@@ -83,7 +83,6 @@ namespace RaceDay.Data
                 .HasMany(c => c.Enrolments)
                 .WithOne(en => en.Category)
                 .HasForeignKey(en => en.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // Participant -> Enrolments
             // Restrict (NO ACTION): User would otherwise reach Enrolments through both
@@ -93,7 +92,6 @@ namespace RaceDay.Data
                 .HasMany(p => p.Enrolments)
                 .WithOne(en => en.Participant)
                 .HasForeignKey(en => en.ParticipantId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // Enrolment -> Result (one-to-one)
             modelBuilder.Entity<Enrolment>()
