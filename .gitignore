@@ -1,0 +1,32 @@
+.vs/
+bld/
+bin/
+obj/
+TestResults/
+.user
+.suo
+.userosscache
+.sln.docstates
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Local DB
+*.mdf
+*.ldf
+
+# NuGet
+*.nupkg
+packages/
+
+# EF Migrations history file sometimes generated locally
+Migrations/*History.cs
+
+# Logs
+*.log
