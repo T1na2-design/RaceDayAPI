@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace RaceDay.DTOs.Events
 {
     public class EventResponse

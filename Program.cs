@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Threading.RateLimiting;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

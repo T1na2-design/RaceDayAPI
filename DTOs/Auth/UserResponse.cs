@@ -1,5 +1,3 @@
-using System;
-
 namespace RaceDay.DTOs.Auth
 {
     public class UserResponse

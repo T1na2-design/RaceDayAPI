@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using RaceDay.DTOs.Auth;
 
 namespace RaceDay.Services

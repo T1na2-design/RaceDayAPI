@@ -1,9 +1,7 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 using RaceDay.DTOs.Auth;
 using RaceDay.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RaceDayAPI.Controllers
 {

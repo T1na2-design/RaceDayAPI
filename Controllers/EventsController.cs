@@ -1,14 +1,11 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore.Annotations;
 using RaceDay.Data;
-using RaceDay.DTOs.Events;
 using RaceDay.DTOs.Categories;
+using RaceDay.DTOs.Events;
 using RaceDay.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RaceDayAPI.Controllers
 {

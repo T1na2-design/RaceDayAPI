@@ -1,5 +1,3 @@
-using System;
-
 namespace RaceDay.DTOs.Enrolments
 {
     public class EnrolmentResponse

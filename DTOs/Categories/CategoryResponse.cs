@@ -1,5 +1,3 @@
-using System;
-
 namespace RaceDay.DTOs.Categories
 {
     public class CategoryResponse
