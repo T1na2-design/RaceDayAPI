@@ -5,6 +5,7 @@ using RaceDay.Data;
 using RaceDay.DTOs.Categories;
 using RaceDay.DTOs.Events;
 using RaceDay.Models;
+using RaceDay.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace RaceDayAPI.Controllers
@@ -14,10 +15,12 @@ namespace RaceDayAPI.Controllers
     public class EventsController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
+        private readonly IBlobService _blobService;
 
-        public EventsController(ApplicationDbContext db)
+        public EventsController(ApplicationDbContext db, IBlobService blobService)
         {
             _db = db;
+            _blobService = blobService;
         }
 
         /// <summary>
@@ -272,6 +275,51 @@ namespace RaceDayAPI.Controllers
                 .ToListAsync();
 
             return Ok(new { totalEnrolments, categoryBreakdown, genderDemo });
+        }
+
+        /// <summary>
+        /// Organiser only: upload a banner image for their event to Azure Blob Storage.
+        /// </summary>
+        [HttpPost("{id}/upload-banner")]
+        [Authorize(Roles = "Organiser")]
+        [SwaggerOperation(Summary = "Upload event banner image (organiser only, own events)")]
+        public async Task<IActionResult> UploadBanner(int id, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("File is required.");
+
+            // Get the current user
+            var userIdClaim = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdClaim == null) return Unauthorized();
+            if (!int.TryParse(userIdClaim.Value, out var userId)) return Unauthorized();
+
+            // Verify the organiser exists and owns the event
+            var organiser = await _db.Organisers.FirstOrDefaultAsync(o => o.UserId == userId);
+            if (organiser == null) return Forbid();
+
+            var ev = await _db.Events.FindAsync(id);
+            if (ev == null) return NotFound("Event not found.");
+
+            if (ev.OrganiserId != organiser.Id)
+                return Forbid("You can only upload banners for your own events.");
+
+            try
+            {
+                // Upload file to Azure Blob Storage
+                string blobUrl = await _blobService.UploadFileAsync(file);
+
+                // Save the URL to the event
+                ev.BannerUrl = blobUrl;
+                _db.Events.Update(ev);
+                await _db.SaveChangesAsync();
+
+                return Ok(new { message = "Banner uploaded successfully.", bannerUrl = blobUrl });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { error = "Failed to upload banner.", details = ex.Message });
+            }
         }
     }
 }

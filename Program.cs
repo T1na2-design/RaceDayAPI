@@ -56,6 +56,7 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<RaceDay.Services.IAuthService, RaceDay.Services.AuthService>();
+builder.Services.AddScoped<RaceDay.Services.IBlobService, RaceDay.Services.BlobService>();
 builder.Services.AddScoped<Microsoft.AspNetCore.Identity.IPasswordHasher<RaceDay.Models.User>, Microsoft.AspNetCore.Identity.PasswordHasher<RaceDay.Models.User>>();
 
 // Custom session authentication so [Authorize] and Roles work based on session

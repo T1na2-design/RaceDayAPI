@@ -56,6 +56,9 @@ namespace RaceDay.Models
         [StringLength(50)]
         public string Status { get; set; }
 
+        // Banner image URL stored in Azure Blob Storage
+        public string BannerUrl { get; set; }
+
         // Navigation
         public virtual Organiser Organiser { get; set; }
         public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
